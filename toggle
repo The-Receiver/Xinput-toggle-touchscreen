@@ -1,0 +1,12 @@
+#copy and paste this to your bashrc
+
+function toggle {
+
+#For now device is hardcoded as touchscreen
+device=$(xinput | grep Touchscreen | grep -o id=[0-9]* | sed 's/id=//')
+
+toggle=$( echo $(( $(xinput list-props "$device" | grep "Device Enabled" | grep -o "[01]$") ^ 1 )) )
+
+xinput set-prop $device "Device Enabled" $toggle
+
+}
